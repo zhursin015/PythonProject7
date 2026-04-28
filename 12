@@ -1,0 +1,63 @@
+import random
+
+class RecruitmentProcess:
+    def __init__(self):
+        self.vacancy_approved = False
+        self.candidates = ["Алексей", "Мария", "Иван", "Елена"]
+        self.hired_employee = None
+
+    def start_hiring(self):
+        print("--- Подготовительный этап ---")
+        while not self.vacancy_approved:
+            print("Руководитель: Создание заявки...")
+            # Ветвление: Проверка HR
+            if random.choice([True, False]):
+                print("HR: Заявка утверждена.")
+                self.vacancy_approved = True
+            else:
+                print("HR: Заявка отклонена. Отправка на доработку руководителю.")
+
+        print("\n--- Этап отбора ---")
+        print("Система: Вакансия опубликована на сайте.")
+        
+        qualified_candidates = []
+        for c in self.candidates:
+            if random.choice([True, False]):
+                print(f"HR: Анкета {c} подходит.")
+                qualified_candidates.append(c)
+            else:
+                print(f"HR: Анкета {c} отклонена.")
+
+        print("\n--- Этап собеседования ---")
+        for c in qualified_candidates:
+            print(f"Проверка кандидата {c}:")
+            # Собеседование (успех если оба этапа пройдены)
+            hr_interview = random.choice([True, False])
+            tech_interview = random.choice([True, False])
+
+            if hr_interview and tech_interview:
+                print(f"Результат: {c} прошел оба этапа. Предлагаем оффер.")
+                if self.confirm_offer(c):
+                    self.finalize_hiring(c)
+                    break
+            else:
+                print(f"Результат: {c} не прошел собеседование. Отказ.")
+
+    def confirm_offer(self, candidate):
+        # Кандидат подтверждает оффер
+        accepted = random.choice([True, True, False]) # 66% шанс
+        if accepted:
+            print(f"Кандидат {candidate}: Оффер принят!")
+            return True
+        print(f"Кандидат {candidate}: Отказался от оффера.")
+        return False
+
+    def finalize_hiring(self, name):
+        print("\n--- Заключительный этап ---")
+        print(f"Система: {name} добавлен в базу данных.")
+        print("HR -> IT: Уведомление о настройке рабочего места.")
+        print("Процесс найма завершен успешно.")
+
+# Запуск
+recruitment = RecruitmentProcess()
+recruitment.start_hiring()
